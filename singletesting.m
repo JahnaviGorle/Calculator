@@ -1,0 +1,13 @@
+clc;
+clear all;
+close all;
+warning off;
+load Classifier;
+[filename, pathname] = uigetfile('*.*', 'Pick an Image');
+filename=strcat(pathname,filename);
+imga=imbinarize(rgb2gray(imread(filename)));
+img=imresize(imga,[28 28]);
+[Features] = extractHOGFeatures(img,'CellSize',[8 8]);
+PredictedClass=predict(Classifier,Features);
+figure;imshow(imga),title(PredictedClass);
+disp(PredictedClass);
